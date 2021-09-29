@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/21.1.5/css/dx.light.css" />
+
+    <title>Document</title>
+</head>
+<body class="dx-viewport">
+    <div class="form">
+        <dx-tree-view
+            id="simple-treeview"
+            [items]="products"
+            [width]="300"
+            (onItemClick)="selectItem($event)"
+        ></dx-tree-view>
+        <div id="product-details" *ngIf="currentItem.price">
+            <img [src]="currentItem.image" />
+            <div class="name">{{currentItem.text}}</div>
+            <div class="price">{{"$" + currentItem.price}}</div>
+        </div>
+    </div>
+    <dx-button text="clickme"  (onClick)="helloWorld()"></dx-button>
+    
+</body>
+</html>
