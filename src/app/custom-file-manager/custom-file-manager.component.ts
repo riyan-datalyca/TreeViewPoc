@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
 import CustomFileSystemProvider from 'devextreme/file_management/custom_provider';
 import FileSystemItem from 'devextreme/file_management/file_system_item';
 
@@ -37,13 +36,13 @@ export class CustomFileManagerComponent implements OnInit {
         var dataItems = pathInfo.dataItem;
         console.log('dataItems', dataItems);
         console.log('test', CustomFileManagerComponent.test);
-        
+
         var items: any;
         if (typeof dataItems !== 'undefined') {
           var name = dataItems.name;
           items = CustomFileManagerComponent.test.find(x => x.name === name)?.items;
           console.log('items', items);
-          
+
         } else {
           items = CustomFileManagerComponent.test;
         }
@@ -52,25 +51,52 @@ export class CustomFileManagerComponent implements OnInit {
       createDirectory(parentDirectory: FileSystemItem, name: string) {
         console.log('createDirectory', parentDirectory, name);
         const newDirectory = {
-          "name":name,
-          "isDirectory":parentDirectory.isDirectory,
-          "items":[]
+          "name": name,
+          "isDirectory": parentDirectory.isDirectory,
+          "items": []
         }
         CustomFileManagerComponent.test.push(
           newDirectory
         );
         // return this.test;
       },
-      moveItem(item: FileSystemItem, destinationDirectory: FileSystemItem){
+      moveItem(item: FileSystemItem, destinationDirectory: FileSystemItem) {
         console.log('moveItem', item, destinationDirectory);
-        
+        var items = CustomFileManagerComponent.test;
+        let parentIndex = items.findIndex(x => x.name === item.pathKeys[0]);
+        let itemIndex = items[parentIndex].items.findIndex(x => x.name === item.name);
+        let file = CustomFileManagerComponent.test[parentIndex].items[itemIndex].name;
+        let isDirectory = CustomFileManagerComponent.test[parentIndex].items[itemIndex].isDirectory;
+        const newFile = {
+          "name": file,
+          "isDirectory": isDirectory,
+          "items": []
+        }
+
+
+        CustomFileManagerComponent.test[parentIndex].items.splice(itemIndex, 1);
+        console.log('');
+
+        let destParentIndex = destinationDirectory.name ? 
+        items.findIndex(x => x.name === destinationDirectory.pathKeys[0]) : 0;
+        console.log('destparentIndex', destParentIndex);
+        console.log('destlist', CustomFileManagerComponent.test[destParentIndex]);
+
+
+        CustomFileManagerComponent.test[destParentIndex].items.push(newFile);
+        console.log('response', CustomFileManagerComponent.test);
+
+
+
       },
-      renameItem(item: FileSystemItem, newName: string){
+      renameItem(item: FileSystemItem, newName: string) {
         console.log('renameItem', item, newName);
-        // CustomFileManagerComponent.test
-        // CustomFileManagerComponent.test.find(x => x.name === item.pathKeys[0])?.items.find(x => x.name === item.name) = newName;        
-        CustomFileManagerComponent.test[2].name = newName;        
-        
+        var items = CustomFileManagerComponent.test;
+        let parentIndex = items.findIndex(x => x.name === item.pathKeys[0]);
+        let itemIndex = items[parentIndex].items.findIndex(x => x.name === item.name);
+        CustomFileManagerComponent.test[parentIndex].items[itemIndex].name = newName;
+        console.log('return renameItem', CustomFileManagerComponent.test);
+
       },
 
     });

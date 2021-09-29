@@ -1,3 +1,7 @@
+# DevExpress Installation
+
+-  npm install devextreme@21.1 devextreme-angular@21.1 --save --save-exact
+
 # TreeViewPoc
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.1.1.
